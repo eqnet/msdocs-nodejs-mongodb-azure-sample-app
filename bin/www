@@ -1,47 +1,51 @@
 #!/usr/bin/env node
 
-/**
- * Module dependencies.
- */
+const { getApp } = require('../app');
+const debug = require('debug')('todolist:server');
+const http = require('http'); // STEVE
 
-var { getApp } = require("../app");
-var debug = require("debug")("todolist:server");
-var http = require("http");
+// const https = require('https'); // STEVE
+// const fs = require('fs'); // STEVE
 
 /**
  * Create HTTP server.
  */
-getApp().then((app) => {
-  var port = app.get("port");
-  var server = http.createServer(app);
+getApp().then(app => {
+  const port = app.get('port');
+  const server = http.createServer(app).listen(port); // STEVE
 
-  /**
-   * Listen on provided port, on all network interfaces.
-   */
+  // const server = https
+  //   .createServer(
+  //     {
+  //       cert: fs.readFileSync('./localhost.pem'),
+  //       key: fs.readFileSync('./localhost-key.pem'),
+  //     },
+  //     app
+  //   )
+  //   .listen(443); // STEVE
 
-  server.listen(port);
-  server.on("error", onError);
-  server.on("listening", onListening);
+  server.on('error', onError);
+  server.on('listening', onListening);
 
   /**
    * Event listener for HTTP server "error" event.
    */
 
   function onError(error) {
-    if (error.syscall !== "listen") {
+    if (error.syscall !== 'listen') {
       throw error;
     }
 
-    var bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
+    const bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
 
     // handle specific listen errors with friendly messages
     switch (error.code) {
-      case "EACCES":
-        console.error(bind + " requires elevated privileges");
+      case 'EACCES':
+        console.error(bind + ' requires elevated privileges');
         process.exit(1);
         break;
-      case "EADDRINUSE":
-        console.error(bind + " is already in use");
+      case 'EADDRINUSE':
+        console.error(bind + ' is already in use');
         process.exit(1);
         break;
       default:
@@ -54,8 +58,9 @@ getApp().then((app) => {
    */
 
   function onListening() {
-    var addr = server.address();
-    var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
-    debug("Listening on " + bind);
+    const addr = server.address();
+    const bind =
+      typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
+    debug('Listening on ' + bind);
   }
 });
