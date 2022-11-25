@@ -2,17 +2,17 @@
 
 const { getApp } = require('../app');
 const debug = require('debug')('todolist:server');
-const http = require('http'); // STEVE
+const http = require('http'); // Production
 
-// const https = require('https'); // STEVE
-// const fs = require('fs'); // STEVE
+// const https = require('https'); // Development
+// const fs = require('fs'); // Development
 
 /**
  * Create HTTP server.
  */
 getApp().then(app => {
   const port = app.get('port');
-  const server = http.createServer(app).listen(port); // STEVE
+  const server = http.createServer(app).listen(port); // Production
 
   // const server = https
   //   .createServer(
@@ -22,7 +22,7 @@ getApp().then(app => {
   //     },
   //     app
   //   )
-  //   .listen(443); // STEVE
+  //   .listen(443); // Development
 
   server.on('error', onError);
   server.on('listening', onListening);
