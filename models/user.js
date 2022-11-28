@@ -4,7 +4,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true },
   url: { type: String, required: true },
   ipAddress: String,
-  ipAddresses: String,
+  ipAddresses: Array,
   createdAt: Date,
   updatedAt: Date,
 });
