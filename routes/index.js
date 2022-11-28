@@ -132,11 +132,13 @@ router.post('/api/users', checkApiKeyIsValid, (req, res, next) => {
   if (Array.isArray(users)) {
     users.forEach(user => {
       user.ipAddress = req.ip;
+      user.ipAddresses = req.ips;
       user.createdAt = now;
       user.updatedAt = now;
     });
   } else {
     users.ipAddress = req.ip;
+    users.ipAddresses = req.ips;
     users.createdAt = now;
     users.updatedAt = now;
   }
